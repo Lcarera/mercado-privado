@@ -6,19 +6,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ItemsComponent } from './items/items.component';
+import { ItemListComponent } from './item-list/item-list.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ItemService } from './item.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ItemsComponent
+    ItemsComponent,
+    ItemListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ItemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
