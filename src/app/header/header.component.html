@@ -1,6 +1,14 @@
 <header class="bg-yellow-300 h-10 flex justify-center items-center">
-    <form [action]="'/items'" method="GET" class="w-full flex justify-center items-center">
-        <input type="text" name="search" placeholder="Nunca dejes de buscar" class="w-4/5 border-gray-400 border rounded-md py-1 text-sm px-2" [(ngModel)]="searchText">
-        <button type="submit" class="text-gray-400 flex-2 ml-2">Search</button>
-    </form>
+  <form (ngSubmit)="onSubmit()" class="w-full flex justify-center items-center">
+    <input
+      type="text"
+      name="search"
+      placeholder="Nunca dejes de buscar"
+      class="w-4/5 border-gray-400 border rounded-md py-1 text-sm px-2"
+      [(ngModel)]="searchText"
+    />
+    <button type="submit" class="text-gray-400 flex-2 ml-2" routerLink="/items">
+      Search
+    </button>
+  </form>
 </header>
