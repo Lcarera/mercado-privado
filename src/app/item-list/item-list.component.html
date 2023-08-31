@@ -1,0 +1,10 @@
+<ng-container *ngFor="let item of items">
+    <app-items
+        [location]="item.address.state_name"
+        [price]="item.price"
+        [description]="item.title"
+        [thumbnail]="item.thumbnail"
+        [id]="item.id"
+    ></app-items>
+</ng-container>
+
