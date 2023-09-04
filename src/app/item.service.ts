@@ -6,12 +6,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ItemService {
 
-  private apiUrl = 'https://api.mercadolibre.com/sites/MLA/';
+  private apiUrl = 'https://api.mercadolibre.com/';
 
   constructor(private http: HttpClient) { }
 
   getItems(searchText: string) {
-      console.log(`${this.apiUrl}search?q=${searchText}`);
-      return this.http.get<any[]>(`${this.apiUrl}search?q=${searchText}&limit=5`);
+    return this.http.get<any[]>(`${this.apiUrl}sites/MLA/search?q=${searchText}&limit=5`);
+  }
+
+  getCategories(categoryId: string) {
+    return this.http.get<any[]>(`${this.apiUrl}categories/${categoryId}`);
   }
 }
