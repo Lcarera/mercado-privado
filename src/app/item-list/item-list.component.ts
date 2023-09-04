@@ -14,6 +14,7 @@ export class ItemListComponent implements OnInit {
   public items: any[] = [];
   public categories: string[] = [];
   private subscription: Subscription = new Subscription();
+  public parsedCategories: string = '';
   constructor(private route: ActivatedRoute, private itemService: ItemService) {}
 
   ngOnInit(): void {
@@ -25,6 +26,8 @@ export class ItemListComponent implements OnInit {
 
   fetchItems(): void {
     if(this.searchText === '' || this.searchText === null || this.searchText === undefined) return;
+    this.parsedCategories = '';
+    this.categories = [];
     this.subscription = this.itemService.getItems(this.searchText).subscribe({
       next: (response: any) => {
         this.items = response.results;
@@ -36,33 +39,46 @@ export class ItemListComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   getCategories(): void {
-    console.log(this.items);
+    let sameCategory: boolean = true;
     
-   /*  let categoryId: string = '';
+    let categoryId: string = '';
     this.items.forEach((item: any) => {
       if(categoryId === '') {
         categoryId = item.category_id;
       }
+      
       if(item.category_id !== categoryId) {
         this.categories = []
-        return;
+        sameCategory = false;
       }
     });
+
+    if(!sameCategory) return;
     this.subscription = this.itemService.getCategories(categoryId).subscribe({
       next: (response: any) => {
         this.categories = response.path_from_root.map((category: any) => category.name);
+        this.parseCategories();
       },
       error: (error: Error) => {
         console.log(error);
       }
     });
-    console.log(this.categories); */
-    
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  parseCategories(): void {
+    let categories: string = '';
+    this.categories.forEach((category: string, index: number) => {
+      if(index === 0) {
+        categories += category;
+      } else {
+        categories += ` > ${category}`;
+      }
+    });
+    this.parsedCategories = categories;
+  }
 }
