@@ -9,13 +9,15 @@ import { ItemsComponent } from './items/items.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ItemService } from './item.service';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ItemsComponent,
-    ItemListComponent
+    ItemListComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,
