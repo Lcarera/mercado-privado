@@ -1,1 +1,23 @@
-<p>item-detail works!</p>
+<p class="mx-40 my-2 text-gray-400">{{itemData.parsedCategories}}</p>
+<div class="bg-white rounded-lg shadow-md overflow-hidden mx-40 my-2">
+    <div class="flex">
+    
+        <img src="{{itemData.picture.url}}" alt="item-image" width="{{itemData.picture.width}}" height="{{itemData.picture.height}}" class="m-10 flex-1">
+        <div class="flex-1 p-4">
+            <p class="text-gray-400">{{itemData.condition == 'new' ? 'Nuevo' : 'Usado' }} - {{itemData.soldQuantity}} vendidos</p>
+            <h1 class="text-2xl font-bold w-3/5">{{itemData.title}}</h1>
+            <div class="flex items-center mt-10">
+                <p class="text-5xl font-bold">$ {{itemData.price}}</p>
+                <p class="text-3xl pb-1">{{itemData.cents}}</p>
+            </div>
+            <div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white mt-20 py-2 px-4 w-3/4 text-xl"><a target="_blank" href="{{itemData.linkMl}}">Comprar</a></button>
+            </div>
+        </div>
+    </div>
+    <div id="description" class="w-3/4 mx-10">
+        <h2 class="text-3xl font-bold w-3/5">Descripción del producto</h2>
+        <p class="text-gray-500 mt-5 text-lg">{{itemData.description}}</p>
+    </div>
+</div>
+    

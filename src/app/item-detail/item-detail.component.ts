@@ -6,12 +6,14 @@ interface ItemData {
   id: string;
   title: string;
   price: string;
-  picture: string;
+  picture: any;
   condition: string;
   soldQuantity: string;
   description: string;
   categoryId: string;
   parsedCategories: string;
+  linkMl: string;
+  cents?: string;
 }
 
 @Component({
@@ -25,12 +27,14 @@ export class ItemDetailComponent implements OnInit {
     id: '',
     title: '',
     price: '',
-    picture: '',
+    picture: {},
     condition: '',
     soldQuantity: '',
     description: '',
     categoryId: '',
     parsedCategories: '',
+    linkMl: '',
+    cents : '00'
   };
 
   constructor(
@@ -50,11 +54,17 @@ export class ItemDetailComponent implements OnInit {
       next: (data: any) => {
         this.itemData.id = data.id;
         this.itemData.title = data.title;
-        this.itemData.price = data.price;
-        this.itemData.picture = data.pictures[0].url;
+        this.itemData.price = this.itemService.formatPrice(data.price);
+        this.itemData.picture = data.pictures[0];
+        this.itemData.picture.witdh = this.itemData.picture.size.split('x')[0]
+        this.itemData.picture.height = this.itemData.picture.size.split('x')[1]
         this.itemData.condition = data.condition;
         this.itemData.soldQuantity = data.sold_quantity;
         this.itemData.categoryId = data.category_id;
+        this.itemData.linkMl = data.permalink;
+        if(this.itemData.price.includes(',')){
+          this.itemData.cents = this.itemData.price.split(',')[1];
+        }
 
         this.itemService.getCategories(this.itemData.categoryId).subscribe({
           next: (data: any) => {

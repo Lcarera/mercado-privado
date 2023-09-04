@@ -1,6 +1,6 @@
-import { formatNumber } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ItemService } from '../item.service';
 
 @Component({
   selector: 'app-items',
@@ -16,14 +16,10 @@ export class ItemsComponent implements OnInit {
   @Input() thumbnail!: string;
   public searchText: string = '';
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, private itemService:ItemService) {}
   
   ngOnInit(): void {
-    this.formatPrice();
-  }
-
-  formatPrice():void {
-    this.price = formatNumber(Number(this.price), 'en-US', '1.0-0').replace(',', '.');
+    this.price = this.itemService.formatPrice(this.price);
   }
 
   seeItemDetail() :void {

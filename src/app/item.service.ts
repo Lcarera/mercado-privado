@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { formatNumber } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +26,9 @@ export class ItemService {
 
   getItemDescription(itemId: string) {
     return this.http.get<any[]>(`${this.apiUrl}items/${itemId}/description`);
+  }
+
+  formatPrice(price:string):string {
+    return  formatNumber(Number(price), 'en-US', '1.0-0').replace(',', '.');
   }
 }
