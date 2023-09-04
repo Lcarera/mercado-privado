@@ -6,8 +6,8 @@ import { ItemDetailComponent } from './item-detail/item-detail.component';
 
 const routes: Routes = [
   { path: 'items', component: ItemListComponent , pathMatch: 'full'},
-  { path: 'items/:search', component: ItemListComponent , pathMatch: 'full'},
   { path: 'items/:id', component: ItemDetailComponent , pathMatch: 'full'},
+  { path: 'items/', component: ItemListComponent , pathMatch: 'full'},
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', redirectTo: '/', pathMatch: 'full'}
   // Other routes...
