@@ -40,21 +40,31 @@ export class ItemListComponent implements OnInit {
   }
 
   getCategories(): void {
-    let sameCategory: boolean = true;
-    
     let categoryId: string = '';
+    let categoryCount: {[key: string]: number} = {};
+
     this.items.forEach((item: any) => {
-      if(categoryId === '') {
-        categoryId = item.category_id;
-      }
-      
-      if(item.category_id !== categoryId) {
-        this.categories = []
-        sameCategory = false;
+      if(categoryCount[item.category_id]) {
+        categoryCount[item.category_id]++;
+      } else {
+        categoryCount[item.category_id] = 1;
       }
     });
 
-    if(!sameCategory) return;
+    let maxCount = 0;
+    for(let category in categoryCount) {
+      if(categoryCount[category] > maxCount) {
+        maxCount = categoryCount[category];
+        categoryId = category;
+      } else if(categoryCount[category] === maxCount) {
+        categoryId = '';
+      }
+    }
+
+    if(categoryId === '') {
+      return;
+    }
+
     this.subscription = this.itemService.getCategories(categoryId).subscribe({
       next: (response: any) => {
         this.categories = response.path_from_root.map((category: any) => category.name);
