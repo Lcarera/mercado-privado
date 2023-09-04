@@ -58,7 +58,7 @@ export class ItemListComponent implements OnInit {
     this.subscription = this.itemService.getCategories(categoryId).subscribe({
       next: (response: any) => {
         this.categories = response.path_from_root.map((category: any) => category.name);
-        this.parseCategories();
+        this.parsedCategories = this.categories.join(' > ');
       },
       error: (error: Error) => {
         console.log(error);
@@ -68,17 +68,5 @@ export class ItemListComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-
-  parseCategories(): void {
-    let categories: string = '';
-    this.categories.forEach((category: string, index: number) => {
-      if(index === 0) {
-        categories += category;
-      } else {
-        categories += ` > ${category}`;
-      }
-    });
-    this.parsedCategories = categories;
   }
 }
