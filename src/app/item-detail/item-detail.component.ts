@@ -52,41 +52,20 @@ export class ItemDetailComponent implements OnInit {
   fetchItemData(): void {
     this.itemService.getItem(this.itemId).subscribe({
       next: (data: any) => {
-        this.itemData.id = data.id;
-        this.itemData.title = data.title;
-        this.itemData.price = this.itemService.formatPrice(data.price);
-        this.itemData.picture = data.pictures[0];
+        const item = data.item;
+        this.itemData.id = item.id;
+        this.itemData.title = item.title;
+        this.itemData.price = this.itemService.formatPrice(item.price.amount);
+        this.itemData.picture = item.picture;
         this.itemData.picture.witdh = this.itemData.picture.size.split('x')[0]
         this.itemData.picture.height = this.itemData.picture.size.split('x')[1]
-        this.itemData.condition = data.condition;
-        this.itemData.soldQuantity = data.sold_quantity;
-        this.itemData.categoryId = data.category_id;
-        this.itemData.linkMl = data.permalink;
-        if(this.itemData.price.includes(',')){
-          this.itemData.cents = this.itemData.price.split(',')[1];
-        }
+        this.itemData.condition = item.condition;
+        this.itemData.soldQuantity = item.sold_quantity;
+        this.itemData.categoryId = item.category_id;
+        this.itemData.linkMl = item.permalink;
+        this.itemData.description = item.description;
+        this.itemData.parsedCategories = data.categories.breadcrumb.join(' > ');
 
-        this.itemService.getCategories(this.itemData.categoryId).subscribe({
-          next: (data: any) => {
-            const categories = data.path_from_root.map(
-              (category: any) => category.name
-            );
-            this.itemData.parsedCategories = categories.join(' > ');
-          },
-          error: (error: Error) => {
-            console.error(error);
-            // Handle error here
-          },
-        });
-      },
-      error: (error: Error) => {
-        console.error(error);
-        // Handle error here
-      },
-    });
-    this.itemService.getItemDescription(this.itemId).subscribe({
-      next: (data: any) => {
-        this.itemData.description = data.plain_text;
       },
       error: (error: Error) => {
         console.error(error);

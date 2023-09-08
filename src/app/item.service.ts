@@ -6,7 +6,6 @@ import { formatNumber } from '@angular/common';
   providedIn: 'root',
 })
 export class ItemService {
-  private apiUrl = 'https://api.mercadolibre.com/';
   private myApiUrl = 'http://localhost:3000/api/';
 
   constructor(private http: HttpClient) {}
@@ -18,11 +17,7 @@ export class ItemService {
   }
   
   getItem(itemId: string) {
-    return this.http.get<any[]>(`${this.apiUrl}items/${itemId}`);
-  }
-
-  getItemDescription(itemId: string) {
-    return this.http.get<any[]>(`${this.apiUrl}items/${itemId}/description`);
+    return this.http.get<any[]>(`${this.myApiUrl}items/${itemId}`);
   }
 
   formatPrice(price:string):string {
