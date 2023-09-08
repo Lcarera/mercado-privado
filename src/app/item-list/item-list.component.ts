@@ -30,44 +30,8 @@ export class ItemListComponent implements OnInit {
     this.categories = [];
     this.subscription = this.itemService.getItems(this.searchText).subscribe({
       next: (response: any) => {
-        this.items = response.results;
-        this.getCategories();
-      },
-      error: (error: Error) => {
-        console.log(error);
-      }
-    });
-  }
-
-  getCategories(): void {
-    let categoryId: string = '';
-    let categoryCount: {[key: string]: number} = {};
-
-    this.items.forEach((item: any) => {
-      if(categoryCount[item.category_id]) {
-        categoryCount[item.category_id]++;
-      } else {
-        categoryCount[item.category_id] = 1;
-      }
-    });
-
-    let maxCount = 0;
-    for(let category in categoryCount) {
-      if(categoryCount[category] > maxCount) {
-        maxCount = categoryCount[category];
-        categoryId = category;
-      } else if(categoryCount[category] === maxCount) {
-        categoryId = '';
-      }
-    }
-
-    if(categoryId === '') {
-      return;
-    }
-
-    this.subscription = this.itemService.getCategories(categoryId).subscribe({
-      next: (response: any) => {
-        this.categories = response.path_from_root.map((category: any) => category.name);
+        this.items = response.items;
+        this.categories = response.categories;
         this.parsedCategories = this.categories.join(' > ');
       },
       error: (error: Error) => {
@@ -75,7 +39,7 @@ export class ItemListComponent implements OnInit {
       }
     });
   }
-
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

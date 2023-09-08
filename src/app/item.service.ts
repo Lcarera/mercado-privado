@@ -7,19 +7,16 @@ import { formatNumber } from '@angular/common';
 })
 export class ItemService {
   private apiUrl = 'https://api.mercadolibre.com/';
+  private myApiUrl = 'http://localhost:3000/api/';
 
   constructor(private http: HttpClient) {}
 
   getItems(searchText: string) {
     return this.http.get<any[]>(
-      `${this.apiUrl}sites/MLA/search?q=${searchText}&limit=5`
+      `${this.myApiUrl}items?q=${searchText}`
     );
   }
-
-  getCategories(categoryId: string) {
-    return this.http.get<any[]>(`${this.apiUrl}categories/${categoryId}`);
-  }
-
+  
   getItem(itemId: string) {
     return this.http.get<any[]>(`${this.apiUrl}items/${itemId}`);
   }
@@ -29,6 +26,7 @@ export class ItemService {
   }
 
   formatPrice(price:string):string {
-    return  formatNumber(Number(price), 'en-US', '1.0-0').replace(',', '.');
+    const formattedPrice = formatNumber(Number(price), 'en-US', '1.0-0');
+    return formattedPrice.replace(/,/g, '.');
   }
 }
