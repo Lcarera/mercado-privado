@@ -11,7 +11,7 @@ app.get('/api/items' , cors(), async (req, res) => {
     const response = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?q=${query}&limit=5`);
     let categories = [];
     if (response.data.filters.length !== 0) {
-        categories = response.data.filters.find(filter => filter.id === 'category').values[0].path_from_root.map(category => category.name);
+      categories = response.data.filters.find(filter => filter.id === 'category').values[0].path_from_root.map(category => category.name);
     }
     const items = response.data.results.map(result => ({
       id: result.id,
@@ -21,7 +21,7 @@ app.get('/api/items' , cors(), async (req, res) => {
         amount: Math.floor(result.price),
         decimals: result.price % 1 ? Number(result.price.toString().split('.')[1]) : 0
       },
-      picture: result.thumbnail,
+      picture: result.thumbnail.replace('http', 'https'),
       condition: result.condition,
       free_shipping: result.shipping.free_shipping,
       state_name: result.address.state_name
